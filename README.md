@@ -8,21 +8,7 @@
   <img alt="Repository size" src="https://img.shields.io/github/repo-size/EvilNick2/college-game-project?color=56BEB8">
 
   <img alt="License" src="https://img.shields.io/github/license/EvilNick2/college-game-project?color=56BEB8">
-
-  <!-- <img alt="Github issues" src="https://img.shields.io/github/issues/EvilNick2/college-game-project?color=56BEB8" /> -->
-
-  <!-- <img alt="Github forks" src="https://img.shields.io/github/forks/EvilNick2/college-game-project?color=56BEB8" /> -->
-
-  <!-- <img alt="Github stars" src="https://img.shields.io/github/stars/EvilNick2/college-game-project?color=56BEB8" /> -->
 </p>
-
-<!-- Status -->
-
-<!-- <h4 align="center"> 
-	🚧  College Game Project 🚀 Under construction...  🚧
-</h4> 
-
-<hr> -->
 
 <p align="center">
   <a href="#dart-about">About</a> &#xa0; | &#xa0; 

@@ -4,12 +4,26 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<link rel="stylesheet" href="css/style.css">
 	<title>College Game Project</title>
 </head>
 
 <body>
-
+	<div class="combat">
+		<div id="playerHealth" class="left"></div>
+		<div id="playerAmmo"></div>
+		<div class="combatOutput">
+			<p class="text-center combatOutputText"></p>
+		</div>
+		<div id="enemyHealth"></div>
+	</div>
+	<div class="combatMenu">
+		<button type="button" class="combatButton" id="useDagger">Use Dagger</button>
+		<button type="button" class="combatButton" id="usePistol">Use Pistol</button>
+		<button type="button" class="combatButton" id="useBandage">Use Bandage</button>
+		<button type="button" class="combatButton" id="reloadPistol">Reload Pistol</button>
+		<button type="button" class="combatButton" id="restart">Back to Game</button>
+	</div>
 </body>
 
 </html>
