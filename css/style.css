@@ -1,10 +1,12 @@
 :root {
 	--background-color: #292929;
 	--foreground-color: white;
+	--health-color: red;
+	--ammo-color: #248092;
 }
 
 body {
-	background-color: var(--background-color)
+	background-color: var(--background-color);
 }
 
 #console {
@@ -25,7 +27,7 @@ pre {
 	color: var(--foreground-color);
 }
 
-.textbox {
+.textBox {
 	margin: auto;
 	display: block;
 }
@@ -35,6 +37,8 @@ pre {
 	width: 50%;
 	margin: auto;
 }
+
+/*Begin Combat */
 
 .combat {
 	border: 1px solid var(--foreground-color);
@@ -56,17 +60,77 @@ pre {
 }
 
 #playerHealth {
-	background: red;
+	background: var(--health-color);
 	width: 10px;
 	height: 200px;
 	position: absolute;
-	left: 440px;
+	left: 410px;
 }
 
 #playerAmmo {
-	background: #248092;
+	background: var(--ammo-color);
 	width: 10px;
 	height: 200px;
 	position: absolute;
-	left: 425px;
+	left: 395px;
+}
+
+#enemyHealth {
+	background: var(--health-color);
+	width: 10px;
+	height: 200px;
+	position: absolute;
+	right: 410px;
+	top: 50px;
+}
+
+#enemyAmmo {
+	background: var(--ammo-color);
+	width: 10px;
+	height: 200px;
+	position: absolute;
+	right: 395px;
+	top: 50px;
+}
+
+/* Combat buttons */
+.combatButton {
+	margin-top: 5px;
+	background: gray;
+	border: none;
+	display: inline-block;
+	text-decoration: none;
+}
+
+#useDagger {
+	background: var(--health-color);
+	margin-left: 5px;
+}
+
+#useRevolver {
+	background: var(--ammo-color);
+}
+
+#reloadRevolver {
+	background: var(--ammo-color);
+}
+
+#useBandage {
+	background: var(--health-color);
+}
+
+#inventory {
+	background-color: var(--background-color);
+	color: var(--foreground-color);
+	position: relative;
+}
+
+option {
+	color: var(--foreground-color);
+}
+
+#restart {
+	float: right;
+	margin-right: 5px;
+	display: none;
 }
