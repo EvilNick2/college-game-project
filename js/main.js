@@ -1,4 +1,20 @@
 $(document).ready(function () {
+	var revolverShot = new Audio(
+		"audio/revolverShot.wav"
+	);
+
+	var useHealing = new Audio(
+		"audio/bandage.wav"
+	);
+
+	var stab = new Audio(
+		"audio/stab.wav"
+	)
+
+	var reload = new Audio(
+		"audio/reload.wav"
+	)
+
 	function attachListeners() {
 		document
 			.getElementById("useDagger")
@@ -12,6 +28,9 @@ $(document).ready(function () {
 		document
 			.getElementById("useBandage")
 			.addEventListener("click", useBandage, false);
+		document
+			.getElementById("fightSherrif")
+			.addEventListener("click", combatSelect, false)
 		document
 			.getElementById("restart")
 			.addEventListener("click", restart, false);
@@ -60,7 +79,7 @@ $(document).ready(function () {
 	var bandit = {
 		name: "Bandit",
 		greeting:
-			"",
+			"A bandit approaches. 'Howdy partner, drop all your weapons!'",
 		health: 100,
 		attackFirst: true,
 		moveNum: 2,
@@ -71,7 +90,22 @@ $(document).ready(function () {
 		vulnerability: ["piercing", 5]
 	}
 
-	var sherrif = {}
+	// Matthew + Corey
+	var sherrif = {
+		name: "Sherrif",
+		greeting:
+			"A sherrif approaches. 'Hey cowpoke, I heard you was breaking the law!'",
+		health: 200,
+		ammo: 1,
+		attackFirst: true,
+		moveNum: 3,
+		moves: [
+			["revolver", 5],
+			["slash", 8],
+			["whip", 6]
+		],
+		vulnerability: ["slash", 4]
+	}
 
 	let playerEquipped = dagger;
 	let playerDamage;
@@ -177,7 +211,14 @@ $(document).ready(function () {
 				" for " +
 				playerRealDamage
 			);
+			if (checkDamageType(dagger, enemy) > 0) {
+				combatPrint(
+					"Your slash does extra damage " + enemy.vulnerability[1] + " damage"
+				);
+				enemy.health = enemy.health - enemy.vulnerability[1];
+			}
 			calcHealthBar("enemyHealth", enemy.health);
+			stab.play();
 			setTimeout(enemyTurn, 1000);
 			hasAttacked = false;
 		} else {
@@ -207,6 +248,7 @@ $(document).ready(function () {
 				);
 				enemy.health = enemy.health - enemy.vulnerability[1];
 			}
+			revolverShot.play();
 			calcHealthBar("enemyHealth", enemy.health);
 			calcAmmoBar("playerAmmo", player.ammo);
 			setTimeout(enemyTurn, 1000);
@@ -228,6 +270,7 @@ $(document).ready(function () {
 			ammoLoader.owned = ammoLoader.owned - 1;
 			combatPrint("You reloaded your Revolver.");
 			calcAmmoBar("playerAmmo", player.ammo);
+			reload.play();
 			setTimeout(enemyTurn, 1000);
 			hasAttacked = false;
 		} else {
@@ -244,6 +287,7 @@ $(document).ready(function () {
 			bandage.owned = bandage.owned - 1;
 			combatPrint("You used a bandage. Your wounds stop bleeding");
 			calcHealthBar("playerHealth", player.health);
+			useHealing.play();
 			setTimeout(enemyTurn, 1000);
 			hasAttacked = false;
 		} else {
@@ -253,13 +297,17 @@ $(document).ready(function () {
 
 	function combatSelect() {
 		if (enemy == bandit) {
-			combat(player, bandit);
-			player.health = 100;
-			player.ammo = 5;
-		} else {
 			combat(player, sherrif);
 			player.health = 100;
 			player.ammo = 5;
+			calcHealthBar("enemyHealth", enemy.health);
+			calcAmmoBar("enemyAmmo", enemy.ammo);
+		} else {
+			combat(player, bandit);
+			player.health = 100;
+			player.ammo = 5;
+			calcHealthBar("enemyHealth", enemy.health);
+			calcAmmoBar("enemyAmmo", enemy.ammo);
 		}
 	}
 

@@ -64,7 +64,7 @@ pre {
 	width: 10px;
 	height: 200px;
 	position: absolute;
-	left: 410px;
+	left: 22%;
 }
 
 #playerAmmo {
@@ -72,7 +72,7 @@ pre {
 	width: 10px;
 	height: 200px;
 	position: absolute;
-	left: 395px;
+	left: 21%;
 }
 
 #enemyHealth {
@@ -80,8 +80,8 @@ pre {
 	width: 10px;
 	height: 200px;
 	position: absolute;
-	right: 410px;
 	top: 50px;
+	right: 22%;
 }
 
 #enemyAmmo {
@@ -90,7 +90,7 @@ pre {
 	height: 200px;
 	position: absolute;
 	right: 395px;
-	top: 50px;
+	top: 21%;
 }
 
 /* Combat buttons */
