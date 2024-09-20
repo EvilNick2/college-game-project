@@ -38,8 +38,6 @@ pre {
 	margin: auto;
 }
 
-/*Begin Combat */
-
 .combat {
 	border: 1px solid var(--foreground-color);
 	width: 50%;
@@ -48,6 +46,7 @@ pre {
 	margin: auto;
 	margin-top: 50px;
 	overflow: auto;
+	border-radius: 10px;
 }
 
 .combatMenu {
@@ -57,6 +56,7 @@ pre {
 	background: var(--background-color);
 	margin: auto;
 	margin-top: 50px;
+	border-radius: 10px;
 }
 
 #playerHealth {
@@ -65,6 +65,7 @@ pre {
 	height: 200px;
 	position: absolute;
 	left: 22%;
+	border-radius: 5px;
 }
 
 #playerAmmo {
@@ -73,6 +74,7 @@ pre {
 	height: 200px;
 	position: absolute;
 	left: 21%;
+	border-radius: 5px;
 }
 
 #enemyHealth {
@@ -82,6 +84,7 @@ pre {
 	position: absolute;
 	top: 50px;
 	right: 22%;
+	border-radius: 5px;
 }
 
 #enemyAmmo {
@@ -91,6 +94,7 @@ pre {
 	position: absolute;
 	right: 395px;
 	top: 21%;
+	border-radius: 5px;
 }
 
 /* Combat buttons */
@@ -100,6 +104,7 @@ pre {
 	border: none;
 	display: inline-block;
 	text-decoration: none;
+	border-radius: 5px;
 }
 
 #useDagger {
@@ -123,6 +128,7 @@ pre {
 	background-color: var(--background-color);
 	color: var(--foreground-color);
 	position: relative;
+	border-radius: 5px;
 }
 
 option {

@@ -80,7 +80,7 @@ $(document).ready(function () {
 		name: "Bandit",
 		greeting:
 			"A bandit approaches. 'Howdy partner, drop all your weapons!'",
-		health: 100,
+		health: 50,
 		attackFirst: true,
 		moveNum: 2,
 		moves: [
@@ -95,7 +95,7 @@ $(document).ready(function () {
 		name: "Sherrif",
 		greeting:
 			"A sherrif approaches. 'Hey cowpoke, I heard you was breaking the law!'",
-		health: 200,
+		health: 100,
 		ammo: 1,
 		attackFirst: true,
 		moveNum: 3,
@@ -297,31 +297,43 @@ $(document).ready(function () {
 
 	function combatSelect() {
 		if (enemy == bandit) {
-			combat(player, sherrif);
-			player.health = 100;
-			player.ammo = 5;
-			calcHealthBar("enemyHealth", enemy.health);
-			calcAmmoBar("enemyAmmo", enemy.ammo);
+			combat(sherrif);
 		} else {
-			combat(player, bandit);
-			player.health = 100;
-			player.ammo = 5;
-			calcHealthBar("enemyHealth", enemy.health);
-			calcAmmoBar("enemyAmmo", enemy.ammo);
+			combat(bandit);
 		}
 	}
 
-	function combat(player, enemyFighting) {
+	function restart() {
+		player.health = 100;
+		player.ammo = 5;
+
+		calcHealthBar("playerHealth", player.health);
+		calcAmmoBar("playerAmmo", player.ammo);
+		calcHealthBar("enemyHealth", enemy.health);
+
+		document.querySelector(".combatOutput").innerHTML = "";
+
+		document.getElementById("restart").style.display = "none";
+
+		combat(enemy);
+	}
+
+	function combat(enemyFighting) {
 		enemy = enemyFighting;
 		combatPrint(enemy.greeting);
+
+
+		player.health = 100;
+		player.ammo = 5;
+		calcHealthBar("playerHealth", player.health);
+		calcAmmoBar("playerAmmo", player.ammo);
+
 		if (enemy.attackFirst == true) {
 			enemyTurn();
 		}
 		document.getElementById("enemyHealth").style.height = enemy.health + "px";
+		calcHealthBar("enemyHealth", enemy.health);
 	}
 
-	combat(player, bandit);
-	calcHealthBar("playerHealth", player.health)
-	calcHealthBar("enemyHealth", enemy.health)
-	calcAmmoBar("playerAmmo", player.ammo)
+	combat(bandit);
 });
