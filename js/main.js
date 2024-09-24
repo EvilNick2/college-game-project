@@ -322,7 +322,6 @@ $(document).ready(function () {
 		enemy = enemyFighting;
 		combatPrint(enemy.greeting);
 
-
 		player.health = 100;
 		player.ammo = 5;
 		calcHealthBar("playerHealth", player.health);

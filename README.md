@@ -24,27 +24,25 @@
 
 ## :dart: About ##
 
-Describe your project
+This project is a game that I am making for a college project, it is a text based adventure game that is set in wester times. I am working on this project with [Corey Butler](https://github.com/coreybutler2106) and [Matt Slat](https://github.com/MattSlat1).
 
 ## :sparkles: Features ##
 
-:heavy_check_mark: Feature 1;\
-:heavy_check_mark: Feature 2;\
-:heavy_check_mark: Feature 3;
+:heavy_check_mark: Fighting Enemies
+:heavy_check_mark: Looting Items
+:heavy_check_mark: Exploration
 
 ## :rocket: Technologies ##
 
 The following tools were used in this project:
 
-- [Expo](https://expo.io/)
-- [Node.js](https://nodejs.org/en/)
-- [React](https://pt-br.reactjs.org/)
-- [React Native](https://reactnative.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
+- [HTML](https://html.spec.whatwg.org/multipage/)
+- [CSS](https://www.w3.org/Style/CSS/Overview.en.html)
+- [JavaScript](https://ecma-international.org/publications-and-standards/standards/ecma-262/)
 
 ## :white_check_mark: Requirements ##
 
-Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) and [Node](https://nodejs.org/en/) installed.
+Before starting, you need to have [Git](https://git-scm.com) installed.
 
 ## :checkered_flag: Starting ##
 
@@ -55,13 +53,10 @@ $ git clone https://github.com/EvilNick2/college-game-project
 # Access
 $ cd college-game-project
 
-# Install dependencies
-$ yarn
-
 # Run the project
-$ yarn start
+$ start index.html
 
-# The server will initialize in the <http://localhost:3000>
+# The Website will open in your default browser
 ```
 
 ## :memo: License ##
