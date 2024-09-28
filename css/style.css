@@ -97,6 +97,18 @@ pre {
 	border-radius: 5px;
 }
 
+#wantedPoster {
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	max-width: 100%;
+	height: auto;
+	width: 600px;
+}
+
 /* Combat buttons */
 .combatButton {
 	margin-top: 5px;
