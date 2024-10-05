@@ -1,6 +1,7 @@
 :root {
 	--background-color: #292929;
 	--foreground-color: white;
+	--default-button: grey;
 	--health-color: red;
 	--ammo-color: #248092;
 }
@@ -32,13 +33,7 @@ pre {
 	display: block;
 }
 
-.output {
-	display: none;
-	width: 50%;
-	margin: auto;
-}
-
-.combat {
+.textOutput {
 	border: 1px solid var(--foreground-color);
 	width: 50%;
 	height: 300px;
@@ -58,6 +53,17 @@ pre {
 	margin-top: 50px;
 	border-radius: 10px;
 }
+
+.exploreMenu {
+	border: 1px solid var(--foreground-color);
+	width: 50%;
+	height: 100px;
+	background: var(--background-color);
+	margin: auto;
+	margin-top: 50px;
+	border-radius: 10px;
+}
+
 
 #playerHealth {
 	background: var(--health-color);
@@ -112,7 +118,7 @@ pre {
 /* Combat buttons */
 .combatButton {
 	margin-top: 5px;
-	background: gray;
+	background: var(--default-button);
 	border: none;
 	display: inline-block;
 	text-decoration: none;
@@ -147,8 +153,16 @@ option {
 	color: var(--foreground-color);
 }
 
-#restart {
-	float: right;
-	margin-right: 5px;
-	display: none;
+/* Exploration Buttons */
+.exploreButton {
+	margin-top: 5px;
+	background: var(--default-button);
+	border: none;
+	display: inline-block;
+	text-decoration: none;
+	border-radius: 5px;
+}
+
+#explore {
+	margin-left: 5px;
 }

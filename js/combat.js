@@ -1,31 +1,19 @@
 $(document).ready(function () {
 	var revolverShot = new Audio(
-		"audio/combat/revolverShot.wav"
+		"../audio/combat/revolverShot.wav"
 	);
 
-	var revolverShotAlt = new Audio(
-		"audio/combat/revolverShotAlt.wav"
-	)
-
 	var useHealing = new Audio(
-		"audio/combat/bandage.wav"
+		"../audio/combat/bandage.wav"
 	);
 
 	var stab = new Audio(
-		"audio/combat/stab.wav"
-	)
-
-	var stabAlt = new Audio(
-		"audio/combat/stabAlt.wav"
-	)
+		"../audio/combat/stab.wav"
+	);
 
 	var reload = new Audio(
-		"audio/combat/reload.wav"
-	)
-
-	var reloadAlt = new Audio(
-		"audio/combat/reloadAlt.wav"
-	)
+		"../audio/combat/reload.wav"
+	);
 
 	function attachListeners() {
 		document
@@ -40,19 +28,15 @@ $(document).ready(function () {
 		document
 			.getElementById("useBandage")
 			.addEventListener("click", useBandage, false);
-		document
-			.getElementById("fightSherrif")
-			.addEventListener("click", combatSelect, false)
-		document
-			.getElementById("restart")
-			.addEventListener("click", restart, false);
 	}
 
 	attachListeners();
 
 	var player = {
 		health: 100,
+		initialHealth: 100,
 		ammo: 5,
+		initialAmmo: 5,
 		inventory: [
 			"dagger",
 			"sword",
@@ -64,7 +48,7 @@ $(document).ready(function () {
 
 	var dagger = {
 		name: "Small Dagger",
-		stats: 5,
+		stats: 10,
 		damageType: "slash"
 	}
 
@@ -110,11 +94,12 @@ $(document).ready(function () {
 			"A sherrif approaches. 'Hey cowpoke, I heard you was breaking the law!'",
 		health: 100,
 		initialHealth: 100,
-		ammo: 1,
+		ammo: 5,
+		initialAmmo: 5,
 		attackFirst: true,
 		moveNum: 3,
 		moves: [
-			["revolver", 5],
+			["revolver", 10],
 			["slash", 8],
 			["whip", 6]
 		],
@@ -126,24 +111,42 @@ $(document).ready(function () {
 	let playerRealDamage;
 	let enemyMove;
 	let enemyDamage;
-	let enemy;
 	let hasAttacked = true;
 
-	function combatPrint(input) {
-		$(".combatOutput")
+	// Function to check the passed enemy data from the explore URL redirect
+	function getQueryParams() {
+		const params = {};
+		window.location.search.substring(1).split("&").forEach(param => {
+			const [key, value] = param.split("=");
+			params[key] = decodeURIComponent(value);
+		});
+		return params;
+	}
+
+	function textPrint(input) {
+		$(".output")
 			.append("<p class='text-center'>" + input + "</p>");
-		var combatOutputDiv = document.querySelector(".combat");
-		combatOutputDiv.scrollTop = combatOutputDiv.scrollHeight;
+		var textOutputDiv = document.querySelector(".textOutput");
+		textOutputDiv.scrollTop = textOutputDiv.scrollHeight;
 		$("#commandline").val("");
 	}
 
 	function gameOverCheck(playerHealth, enemyHealth) {
 		if (playerHealth <= 0) {
-			combatPrint("You lose. Refresh to try again.");
+			textPrint("You lose. Taking you back to the main menu...");
+			setTimeout(() => {
+				localStorage.removeItem("playerHealth");
+				localStorage.removeItem("playerAmmo");
+				window.location.href = "../index.html";
+			}, 2000);
 			return true;
 		} else if (enemyHealth <= 0) {
-			combatPrint("You've defeated the " + enemy.name + ".");
-			$("#restart").fadeIn(1000);
+			textPrint("You've defeated the " + enemy.name + ". Taking you back to exploration...");
+			localStorage.setItem("playerHealth", playerHealth);
+			localStorage.setItem("playerAmmo", player.ammo);
+			setTimeout(() => {
+				window.location.href = "explore.html";
+			}, 2000);
 			return true;
 		}
 		return false;
@@ -158,20 +161,24 @@ $(document).ready(function () {
 		return Math.floor(calcDamage(movesNum + 1, 1)) - 1;
 	}
 
-	function calcHealthBar(name, health) {
+	function calcHealthBar(name, health, initialHealth) {
+		const healthBar = document.getElementById(name);
 		if (health <= 0) {
-			document.getElementById(name).style.height = 0;
+			healthBar.style.height = 0;
 		} else {
-			document.getElementById(name).style.height = health * 2 + "px";
+			healthBar.style.height = health * 2 + "px";
 		}
+		healthBar.title = `${health}/${initialHealth}`;
 	}
 
-	function calcAmmoBar(name, ammo) {
+	function calcAmmoBar(name, ammo, initialAmmo) {
+		const ammoBar = document.getElementById(name);
 		if (ammo <= 0) {
-			document.getElementById(name).style.height = 0;
+			ammoBar.style.height = 0;
 		} else {
-			document.getElementById(name).style.height = ammo * 50 + "px";
+			ammoBar.style.height = ammo * 50 + "px";
 		}
+		ammoBar.title = `${ammo}/${initialAmmo}`;
 	}
 
 	function checkDamageType(damageTypeAttacking, enemyDamageType) {
@@ -180,25 +187,13 @@ $(document).ready(function () {
 		}
 	}
 
-	function inventorySearch(input) {
-		for (var i = 0; i < player.inventory.length + 1; i++) {
-			if (player.inventory[i] === input) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
-
 	function enemyTurn() {
-		if (
-			gameOverCheck(player.health, enemy.health) == false
-		) {
+		if (gameOverCheck(player.health, enemy.health) == false) {
 			enemyMove = calcEnemyMove(enemy);
 			enemyDamage = calcDamage(enemy.moves[enemyMove][1], 1);
 			var enemyRealDamage = Math.floor(enemyDamage);
 			player.health = player.health - enemyRealDamage;
-			combatPrint(
+			textPrint(
 				enemy.name +
 				" attacks you with " +
 				enemy.moves[enemyMove][0] +
@@ -206,23 +201,14 @@ $(document).ready(function () {
 				enemyRealDamage +
 				"!"
 			);
-			calcHealthBar("playerHealth", player.health);
+			calcHealthBar("playerHealth", player.health, player.initialHealth);
 			hasAttacked = true;
-			for (var i = 0; i < player.inventory.length; i++) {
-				var inventoryOption = player.inventory[i];
-				var createOption = document.createElement("option");
-				createOption.textContext = inventoryOption;
-				createOption.value = inventoryOption;
-				document.getElementById("inventory").appendChild(createOption);
-			}
-		} else {
-			combatPrint("The game is over.")
-		}
+		} else { }
 	}
 
 	function useDagger() {
 		if (hasAttacked === false) {
-			return combatPrint("You are still recovering from your attack.");
+			return textPrint("You are still recovering from your attack.");
 		}
 		if (
 			gameOverCheck(player.health, enemy.health) === false &&
@@ -231,7 +217,7 @@ $(document).ready(function () {
 			playerDamage = calcDamage(playerEquipped.stats, 1);
 			playerRealDamage = Math.floor(playerDamage);
 			enemy.health = enemy.health - playerRealDamage;
-			combatPrint(
+			textPrint(
 				"You attack " +
 				enemy.name +
 				" with your " +
@@ -240,143 +226,114 @@ $(document).ready(function () {
 				playerRealDamage
 			);
 			if (checkDamageType(dagger, enemy) > 0) {
-				combatPrint(
+				textPrint(
 					"Your slash does extra damage " + enemy.vulnerability[1] + " damage"
 				);
 				enemy.health = enemy.health - enemy.vulnerability[1];
 			}
-			calcHealthBar("enemyHealth", enemy.health);
-			if (Math.random() >= 0.06) {
-				stab.play();
-			} else {
-				stabAlt.play();
-			}
+			calcHealthBar("enemyHealth", enemy.health, enemy.initialHealth);
+			stab.play();
 			setTimeout(enemyTurn, 1000);
 			hasAttacked = false;
-		} else {
-			combatPrint("The game is over.");
-		}
+		} else { }
 	}
 
 	function usePistol() {
 		if (hasAttacked === false) {
-			return combatPrint("You are still recovering from your attack.");
+			return textPrint("You are still recovering from your attack.");
 		}
 		if (player.ammo <= 0) {
-			combatPrint("You do not have enough bullets")
+			textPrint("You do not have enough bullets")
 		} else if (
 			gameOverCheck(player.health, enemy.health) === false &&
 			hasAttacked === true
 		) {
-			playerDamage = calcDamage(pistol.stats, 1);
+			playerDamage = calcDamage(pistol.stats, 10);
 			playerRealDamage = Math.floor(playerDamage);
 			enemy.health = enemy.health - playerRealDamage;
 			player.ammo = player.ammo - pistol.ammoCost;
-			combatPrint(
+			textPrint(
 				"You shoot your revolver at " + enemy.name + " for " + playerRealDamage
 			);
 			if (checkDamageType(pistol, enemy) > 0) {
-				combatPrint(
+				textPrint(
 					"Revolver does extra damage " + enemy.vulnerability[1] + " damage"
 				);
 				enemy.health = enemy.health - enemy.vulnerability[1];
 			}
-			if (Math.random() >= 0.06) {
-				revolverShot.play();
-			} else {
-				revolverShotAlt.play()
-			}
-			calcHealthBar("enemyHealth", enemy.health);
-			calcAmmoBar("playerAmmo", player.ammo);
+			revolverShot.play();
+			calcHealthBar("enemyHealth", enemy.health, enemy.initialHealth);
+			calcAmmoBar("playerAmmo", player.ammo, player.initialAmmo);
 			setTimeout(enemyTurn, 1000);
 			hasAttacked = false;
-		} else {
-			combatPrint("The game is over.")
-		}
+		} else { }
 	}
 
 	function reloadRevolver() {
 		if (hasAttacked === false) {
-			return combatPrint("You are still recovering from your attack.");
+			return textPrint("You are still recovering from your attack.");
 		}
 		if (player.ammo != 0) {
-			return combatPrint("You aren't out of ammo yet!");
+			return textPrint("You aren't out of ammo yet!");
 		}
 		if (ammoLoader.owned > 0) {
 			player.ammo = player.ammo + ammoLoader.stats;
 			ammoLoader.owned = ammoLoader.owned - 1;
-			combatPrint("You reloaded your Revolver.");
-			calcAmmoBar("playerAmmo", player.ammo);
-			if (Math.random >= 0.06) {
-				reload.play();
-			} else {
-				reloadAlt.play();
-			}
-			setTimeout(enemyTurn, 1000);
+			textPrint("You reloaded your Revolver.");
+			calcAmmoBar("playerAmmo", player.ammo, player.initialAmmo);
+			reload.play();
+			setTimeout(enemyTurn, 2000);
 			hasAttacked = false;
 		} else {
-			combatPrint("You don't have anymore spare ammo.")
+			textPrint("You don't have anymore spare ammo.")
 		}
 	}
 
 	function useBandage() {
 		if (hasAttacked === false) {
-			return combatPrint("You are still recovering from your attack.");
+			return textPrint("You are still recovering from your attack.");
 		}
 		if (bandage.owned > 0) {
 			player.health = player.health + bandage.stats;
 			bandage.owned = bandage.owned - 1;
-			combatPrint("You used a bandage. Your wounds stop bleeding");
-			calcHealthBar("playerHealth", player.health);
+			textPrint("You used a bandage. Your wounds stop bleeding");
+			calcHealthBar("playerHealth", player.health, player.initialHealth);
 			useHealing.play();
 			setTimeout(enemyTurn, 1000);
 			hasAttacked = false;
 		} else {
-			combatPrint("You don't have any bandages.");
+			textPrint("You don't have any bandages.");
 		}
-	}
-
-	function combatSelect() {
-		if (enemy == bandit) {
-			combat(sherrif);
-		} else {
-			combat(bandit);
-		}
-	}
-
-	function restart() {
-		player.health = 100;
-		player.ammo = 5;
-
-		if (enemy && enemy.initialHealth) {
-			enemy.health = enemy.initialHealth;
-		}
-
-		calcHealthBar("playerHealth", player.health);
-		calcAmmoBar("playerAmmo", player.ammo);
-		calcHealthBar("enemyHealth", enemy.health);
-
-		document.getElementById("restart").style.display = "none";
-
-		combat(enemy);
 	}
 
 	function combat(enemyFighting) {
-		document.querySelector(".combatOutput").innerHTML = "";
+		document.querySelector(".output").innerHTML = "";
 		enemy = enemyFighting;
-		combatPrint(enemy.greeting);
+		textPrint(enemy.greeting);
 
-		player.health = 100;
-		player.ammo = 5;
-		calcHealthBar("playerHealth", player.health);
-		calcAmmoBar("playerAmmo", player.ammo);
+		player.health = localStorage.getItem("playerHealth") || 100;
+		player.ammo = localStorage.getItem("playerAmmo") || 5;
+
+		calcHealthBar("playerHealth", player.health, player.initialHealth);
+		calcAmmoBar("playerAmmo", player.ammo, player.initialAmmo);
 
 		if (enemy.attackFirst == true) {
 			enemyTurn();
 		}
 		document.getElementById("enemyHealth").style.height = enemy.health + "px";
-		calcHealthBar("enemyHealth", enemy.health);
+		calcHealthBar("enemyHealth", enemy.health, player.initialHealth);
 	}
 
-	combat(bandit);
+	const params = getQueryParams();
+	if (params.enemy) {
+		let enemy;
+		if (params.enemy === "bandit") {
+			enemy = bandit;
+		} else if (params.enemy === "sherrif") {
+			enemy = sherrif;
+		}
+		if (enemy) {
+			combat(enemy);
+		}
+	}
 });

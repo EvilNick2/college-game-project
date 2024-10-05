@@ -28,8 +28,8 @@ This project is a game that I am making for a college project, it is a text base
 
 ## :sparkles: Features ##
 
-:heavy_check_mark: Fighting Enemies
-:heavy_check_mark: Looting Items
+:heavy_check_mark: Fighting Enemies\
+:heavy_check_mark: Looting Items\
 :heavy_check_mark: Exploration
 
 ## :rocket: Technologies ##
@@ -39,6 +39,7 @@ The following tools were used in this project:
 - [HTML](https://html.spec.whatwg.org/multipage/)
 - [CSS](https://www.w3.org/Style/CSS/Overview.en.html)
 - [JavaScript](https://ecma-international.org/publications-and-standards/standards/ecma-262/)
+- [jQuery](https://jquery.com/)
 
 ## :white_check_mark: Requirements ##
 
