@@ -348,7 +348,7 @@ $(document).ready(function () {
 		}
 		// Update the enemies health and update their health bar
 		document.getElementById("enemyHealth").style.height = enemy.health + "px";
-		calcHealthBar("enemyHealth", enemy.health, player.initialHealth);
+		calcHealthBar("enemyHealth", enemy.health, enemy.initialHealth);
 	}
 
 	// Get the encountered enemy from the URL and start the combat
