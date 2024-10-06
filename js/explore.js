@@ -1,4 +1,5 @@
 $(document).ready(function () {
+	// Attach event listeners to allow buttons to work
 	function attachListeners() {
 		document
 			.getElementById("explore")
@@ -7,7 +8,7 @@ $(document).ready(function () {
 
 	attachListeners();
 
-
+	// Function to print text to the output box
 	function textPrint(input) {
 		$(".output")
 			.append("<p class='text-center'>" + input + "</p>");
@@ -16,6 +17,7 @@ $(document).ready(function () {
 		$("#commandline").val("");
 	}
 
+	// Calculate and update the health bar display
 	function calcHealthBar(name, health, initialHealth) {
 		const healthBar = document.getElementById(name);
 		if (health <= 0) {
@@ -26,6 +28,7 @@ $(document).ready(function () {
 		healthBar.title = `${health}/${initialHealth}`;
 	}
 
+	// Calculate and update the ammo bar display
 	function calcAmmoBar(name, ammo, initialAmmo) {
 		const ammoBar = document.getElementById(name);
 		if (ammo <= 0) {
@@ -36,11 +39,13 @@ $(document).ready(function () {
 		ammoBar.title = `${ammo}/${initialAmmo}`;
 	}
 
+	// List of possible enemies for the combat redirect
 	const enemies = [
-		{ name: "bandit", weight: 70 },
-		{ name: "sherrif", weight: 30 }
+		{ name: "bandit", weight: 70 }, // Bandit with a higher chance of encounter
+		{ name: "sherrif", weight: 30 } // Sherrif with a lower chance of encounter
 	];
 
+	// Get a random enemy based on the weights
 	function getRandomEnemy(enemies) {
 		const totalWeight = enemies.reduce((sum, enemy) => sum + enemy.weight, 0);
 		let random = Math.random() * totalWeight
@@ -52,6 +57,7 @@ $(document).ready(function () {
 		}
 	}
 
+	// Explore function triggered by the explore button
 	function explore() {
 		textPrint("You start exploring the area...");
 		setTimeout(() => {
@@ -59,6 +65,7 @@ $(document).ready(function () {
 				const enemy = getRandomEnemy(enemies);
 				textPrint("You encountered an enemy!");
 				setTimeout(() => {
+					// Add player data to local storage for persistance over pages
 					localStorage.setItem("playerHealth", player.health);
 					localStorage.setItem("playerAmmo", player.ammo);
 					window.location.href = `combat.html?enemy=${enemy}`
@@ -69,22 +76,25 @@ $(document).ready(function () {
 		}, 1000);
 	}
 
+	// Retrieve player stats from local storage or set default values
 	const playerHealth = localStorage.getItem("playerHealth");
-	const playerAmmo = localStorage.getItem("playerAmmo")
+	const playerAmmo = localStorage.getItem("playerAmmo");
 
 	const player = {
 		health: playerHealth !== null ? parseInt(playerHealth, 10) : 100,
-		initialHealth: 100,
+		initialHealth: 100, // Maximum health of the player
 		ammo: playerAmmo !== null ? parseInt(playerAmmo, 10) : 5,
-		initialAmmo: 5
+		initialAmmo: 5 // Maximum ammo of the player
 	}
 
+	// If the player stats are found in local storage, update the player object
 	if (playerHealth !== null && playerAmmo !== null) {
 		player.health = parseInt(playerHealth, 10);
 		player.ammo = parseInt(playerAmmo, 10);
 		localStorage.removeItem("playerHealth");
 		localStorage.removeItem("playerAmmo");
 	}
+	// Update the health and ammo bars to correctly display the players stats
 	calcHealthBar("playerHealth", player.health, player.initialHealth);
 	calcAmmoBar("playerAmmo", player.ammo, player.initialAmmo)
 })

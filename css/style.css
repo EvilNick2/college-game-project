@@ -1,168 +1,164 @@
+/* Define CSS variables for colour values */
 :root {
-	--background-color: #292929;
-	--foreground-color: white;
-	--default-button: grey;
-	--health-color: red;
-	--ammo-color: #248092;
+	--background-color: #292929;	/* Dark background colour */
+	--foreground-color: white;	/* White foreground colour */
+	--default-button: grey;	/* Default button colour */
+	--health-color: red;	/* Colour for health bar */
+	--ammo-color: #248092;	/* Colour for ammo bar */
 }
 
+/* Set the background colour of the body */
 body {
-	background-color: var(--background-color);
+	background-color: var(--background-color) !important;
 }
 
+/* Style for the console element */
 #console {
-	display: none;
-	width: 50%;
-	margin: auto;
+	display: none;	/* Hide the console be default */
+	width: 50%;	/* Set the width to 50% */
+	margin: auto;	/* Center the console */
 }
 
+/* Style for paragraph elements */
 p {
-	color: var(--foreground-color);
+	color: var(--foreground-color);	/* Set text colour to white */
 }
 
+/* Style for the help message element */
 #message_help {
-	display: none;
+	display: none;	/* Hide the help element by default */
 }
 
+/* Style for preformatted text elements */
 pre {
-	color: var(--foreground-color);
+	color: var(--foreground-color);	/* Set the text colour to white */
 }
 
+/* Style for text box elements */
 .textBox {
-	margin: auto;
-	display: block;
+	margin: auto;	/* Center the text box */
+	display: block;	/* Display as block element */
 }
 
+/* Style for the text output area */
 .textOutput {
-	border: 1px solid var(--foreground-color);
-	width: 50%;
-	height: 300px;
-	background: var(--background-color);
-	margin: auto;
-	margin-top: 50px;
-	overflow: auto;
-	border-radius: 10px;
+	border: 1px solid var(--foreground-color);	/* White border */
+	width: 50%;	/* Set the width to 50% */
+	height: 300px; /* Set the height to 300 pixels */
+	background: var(--background-color); /* Dark background */
+	margin: auto;	/* Center the text output area */
+	margin-top: 50px;	/* Add top margin */
+	overflow: auto;	/* Enable scrolling if content overflows */
+	border-radius: 10px;	/* Rounded corners */
 }
 
+/* Style for combat buttons */
 .combatMenu {
-	border: 1px solid var(--foreground-color);
-	width: 50%;
-	height: 100px;
+	border: 1px solid var(--foreground-color);	/* White border */
+	width: 50%;	/* Set the width to 50% */
+	height: 100px; /* Set the height to 100 pixels */
 	background: var(--background-color);
-	margin: auto;
-	margin-top: 50px;
-	border-radius: 10px;
+	margin: auto;	/* Center the combat menu */
+	margin-top: 50px;	/* Add top margin */
+	border-radius: 10px;	/* Rounded corners */
 }
 
+/* Style for explore buttons */
 .exploreMenu {
-	border: 1px solid var(--foreground-color);
-	width: 50%;
-	height: 100px;
+	border: 1px solid var(--foreground-color);	/* White border */
+	width: 50%;	/* Set the width to 50% */
+	height: 100px; /* Set the height to 100 pixels */
 	background: var(--background-color);
-	margin: auto;
-	margin-top: 50px;
-	border-radius: 10px;
+	margin: auto;	/* Center the explore menu */
+	margin-top: 50px;	/* Add top margin */
+	border-radius: 10px;	/* Rounded corners */
 }
 
-
+/* Style for player health bar */
 #playerHealth {
-	background: var(--health-color);
-	width: 10px;
-	height: 200px;
-	position: absolute;
-	left: 22%;
-	border-radius: 5px;
+	background: var(--health-color);	/* Health colour background */
+	width: 10px;	/* Set the width to 10 pixels */
+	height: 200px; /* Set the height to 200 pixels */
+	position: absolute;	/* Position bar relitive to nearest ancestor */
+	left: 22%;	/* Position bar next to text output */
+	border-radius: 5px;	/* Rounded corners */
 }
 
+/* Style for player ammo bar */
 #playerAmmo {
-	background: var(--ammo-color);
-	width: 10px;
-	height: 200px;
-	position: absolute;
-	left: 21%;
-	border-radius: 5px;
+	background: var(--ammo-color);	/* Ammo colour background */
+	width: 10px;	/* Set the width to 10 pixels */
+	height: 200px; /* Set the height to 200 pixels */
+	position: absolute;	/* Position bar relitive to nearest ancestor */
+	left: 21%;	/* Position bar next to text output */
+	border-radius: 5px;	/* Rounded corners */
 }
 
 #enemyHealth {
-	background: var(--health-color);
-	width: 10px;
-	height: 200px;
-	position: absolute;
-	top: 50px;
-	right: 22%;
-	border-radius: 5px;
+	background: var(--health-color);	/* Health colour background */
+	width: 10px;	/* Set the width to 10 pixels */
+	height: 200px; /* Set the height to 200 pixels */
+	position: absolute;	/* Position bar relitive to nearest ancestor */
+	top: 50px;	/* Space the bar inline with the output */
+	right: 22%;	/* Position bar next to text output */
+	border-radius: 5px;	/* Rounded corners */
 }
 
-#enemyAmmo {
-	background: var(--ammo-color);
-	width: 10px;
-	height: 200px;
-	position: absolute;
-	right: 395px;
-	top: 21%;
-	border-radius: 5px;
-}
-
+/* Style for the wanted poster element */
 #wantedPoster {
-	margin: 0;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	-ms-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
-	max-width: 100%;
-	height: auto;
-	width: 600px;
+    margin: 0; /* Remove default margin */
+    position: absolute; /* Position absolutely within the containing element */
+    top: 50%; /* Center vertically within the containing element */
+    left: 50%; /* Center horizontally within the containing element */
+    -ms-transform: translate(-50%, -50%); /* IE 9: Translate to center the element */
+    transform: translate(-50%, -50%); /* Standard syntax: Translate to center the element */
+    max-width: 100%; /* Ensure the width does not exceed 100% of the containing element */
+    height: auto; /* Set the height to scale proportionally with the width */
+    width: 600px; /* Set the width to 600 pixels */
 }
 
-/* Combat buttons */
+/* Style for combat buttons */
 .combatButton {
-	margin-top: 5px;
-	background: var(--default-button);
-	border: none;
-	display: inline-block;
-	text-decoration: none;
-	border-radius: 5px;
+	margin-top: 5px;	/* Add top margin */
+	background: var(--default-button);	/* Default button background */
+	border: none;	/* Remove button border */
+	display: inline-block;	/* Displays as inline-block */
+	text-decoration: none;	/* Remove  text decoration */
+	border-radius: 5px;	/* Rounded corners */
 }
 
+/* Specific style for the useDagger button */
 #useDagger {
-	background: var(--health-color);
-	margin-left: 5px;
+	background: var(--health-color);	/* Health colour background */
+	margin-left: 5px;	/* Add left margin */
 }
 
-#useRevolver {
-	background: var(--ammo-color);
-}
-
-#reloadRevolver {
-	background: var(--ammo-color);
-}
-
+/* Specific style for the useBandage button */
 #useBandage {
-	background: var(--health-color);
+	background: var(--health-color);	/* Health Colour background */
 }
 
-#inventory {
-	background-color: var(--background-color);
-	color: var(--foreground-color);
-	position: relative;
-	border-radius: 5px;
+/* Specific style for the useRevolver button */
+#useRevolver {
+	background: var(--ammo-color);	/* Ammo colour background */
 }
 
-option {
-	color: var(--foreground-color);
+/* Specific style for the reloadRevolver button */
+#reloadRevolver {
+	background: var(--ammo-color);	/* Ammo colour background */
 }
 
-/* Exploration Buttons */
+/* Styl for explore buttons */
 .exploreButton {
-	margin-top: 5px;
-	background: var(--default-button);
-	border: none;
-	display: inline-block;
-	text-decoration: none;
-	border-radius: 5px;
+	margin-top: 5px;	/* Add top margin */
+	background: var(--default-button);	/* Default button background */
+	border: none;	/* Remove button border */
+	display: inline-block;	/* Display as inline-block */
+	text-decoration: none;	/* Remove text decoration */
+	border-radius: 5px;	/* Rounded corners */
 }
 
+/* Specific style for the explore button */
 #explore {
-	margin-left: 5px;
+	margin-left: 5px;	/* Add left margin */
 }
