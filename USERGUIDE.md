@@ -1,7 +1,7 @@
 <h1 align="center">College Game Project User Guide and FAQ</h1>
 
 <p align="center">
-	<a href="#dart-user-guide-and-faq">User Guide and FAQ</a> &#xa0; | &#xa0; 
+	<a href="#question-user-guide-and-faq">User Guide and FAQ</a> &#xa0; | &#xa0; 
 	<a href="#memo-license">License</a> &#xa0; | &#xa0;
 	<a href="https://github.com/EvilNick2" target="_blank">Author</a>
 </p>
