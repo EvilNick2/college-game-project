@@ -2,6 +2,7 @@
 
 <p align="center">
 	<a href="#question-user-guide-and-faq">User Guide and FAQ</a> &#xa0; | &#xa0; 
+   <a href="#page_with_curl-forms">Forms</a>
 	<a href="#memo-license">License</a> &#xa0; | &#xa0;
 	<a href="https://github.com/EvilNick2" target="_blank">Author</a>
 </p>
