@@ -2,7 +2,7 @@
 
 <p align="center">
 	<a href="#question-user-guide-and-faq">User Guide and FAQ</a> &#xa0; | &#xa0; 
-   <a href="#page_with_curl-forms">Forms</a>
+   <a href="#page_with_curl-forms">Forms</a> &#xa0; | &#xa0; 
 	<a href="#memo-license">License</a> &#xa0; | &#xa0;
 	<a href="https://github.com/EvilNick2" target="_blank">Author</a>
 </p>
@@ -51,7 +51,7 @@
 
 ## :page_with_curl: Forms ##
 
-[Non-Technical Form](https://forms.office.com/e/WQQw5xTs5j)
+[Non-Technical Form](https://forms.office.com/e/WQQw5xTs5j)\
 [Technical Form](https://forms.office.com/e/2XD8nwNZjq)
 
 ## :memo: License ##
