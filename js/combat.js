@@ -342,6 +342,14 @@ $(document).ready(function () {
 		calcHealthBar("playerHealth", player.health, player.initialHealth);
 		calcAmmoBar("playerAmmo", player.ammo, player.initialAmmo);
 
+		// // Set the enemy image based on enemy type
+		// const enemyImage = document.getElementById("enemyImage");
+		// if (enemy.name === "bandit") {
+		// 	enemyImage.src = "../imgs/bandit.png"; // Update with the correct path to the bandit image
+		// } else if (enemy.name === "sherrif") {
+		// 	enemyImage.src = "../imgs/sherrif.png"; // Update with the correct path to the sherrif image
+		// }
+
 		// Check if the enemy has the attack first flag
 		if (enemy.attackFirst == true) {
 			enemyTurn();
