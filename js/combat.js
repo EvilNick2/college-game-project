@@ -95,11 +95,11 @@ $(document).ready(function () {
 		vulnerability: ["piercing", 5]
 	}
 
-	// Enemy: Sherrif
-	var sherrif = {
-		name: "Sherrif",
+	// Enemy: Sheriff
+	var sheriff = {
+		name: "Sheriff",
 		greeting:
-			"A sherrif approaches. 'Hey cowpoke, I heard you was breaking the law!'",
+			"A sheriff approaches. 'Hey cowpoke, I heard you was breaking the law!'",
 		health: 100,
 		initialHealth: 100,
 		ammo: 5,
@@ -343,12 +343,12 @@ $(document).ready(function () {
 		calcAmmoBar("playerAmmo", player.ammo, player.initialAmmo);
 
 		// // Set the enemy image based on enemy type
-		// const enemyImage = document.getElementById("enemyImage");
-		// if (enemy.name === "bandit") {
-		// 	enemyImage.src = "../imgs/bandit.png"; // Update with the correct path to the bandit image
-		// } else if (enemy.name === "sherrif") {
-		// 	enemyImage.src = "../imgs/sherrif.png"; // Update with the correct path to the sherrif image
-		// }
+		const enemyImage = document.getElementById("enemyImage");
+		if (enemy.name === "Bandit") {
+			enemyImage.src = "../imgs/bandit.png"; // Update with the correct path to the bandit image
+		} else if (enemy.name === "Sheriff") {
+			enemyImage.src = "../imgs/sheriff.png"; // Update with the correct path to the sheriff image
+		}
 
 		// Check if the enemy has the attack first flag
 		if (enemy.attackFirst == true) {
@@ -365,8 +365,8 @@ $(document).ready(function () {
 		let enemy;
 		if (params.enemy === "bandit") {
 			enemy = bandit;
-		} else if (params.enemy === "sherrif") {
-			enemy = sherrif;
+		} else if (params.enemy === "sheriff") {
+			enemy = sheriff;
 		}
 		if (enemy) {
 			combat(enemy);

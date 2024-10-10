@@ -42,7 +42,7 @@ $(document).ready(function () {
 	// List of possible enemies for the combat redirect
 	const enemies = [
 		{ name: "bandit", weight: 70 }, // Bandit with a higher chance of encounter
-		{ name: "sherrif", weight: 30 } // Sherrif with a lower chance of encounter
+		{ name: "sheriff", weight: 30 } // Sheriff with a lower chance of encounter
 	];
 
 	// Get a random enemy based on the weights

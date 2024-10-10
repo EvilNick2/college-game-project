@@ -148,7 +148,7 @@ pre {
 	background: var(--ammo-color);	/* Ammo colour background */
 }
 
-/* Styl for explore buttons */
+/* Style for explore buttons */
 .exploreButton {
 	margin-top: 5px;	/* Add top margin */
 	background: var(--default-button);	/* Default button background */
@@ -161,4 +161,12 @@ pre {
 /* Specific style for the explore button */
 #explore {
 	margin-left: 5px;	/* Add left margin */
+}
+
+/* Style for enemy image used in combat */
+#enemyImage {
+	display: block;	/* Display as block */
+	margin-left: auto;	/* Adds left margin to center image */
+	margin-right: auto;	/* Adds right margin to center image */
+	margin-top: 10px;	/* Adds top margin for better visuals */
 }
