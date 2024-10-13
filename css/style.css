@@ -47,7 +47,7 @@ pre {
 	height: 300px; /* Set the height to 300 pixels */
 	background: var(--background-color); /* Dark background */
 	margin: auto;	/* Center the text output area */
-	margin-top: 50px;	/* Add top margin */
+	margin-top: 25px;	/* Add top margin */
 	overflow: auto;	/* Enable scrolling if content overflows */
 	border-radius: 10px;	/* Rounded corners */
 }
@@ -59,7 +59,7 @@ pre {
 	height: 100px; /* Set the height to 100 pixels */
 	background: var(--background-color);
 	margin: auto;	/* Center the combat menu */
-	margin-top: 50px;	/* Add top margin */
+	margin-top: 25px;	/* Add top margin */
 	border-radius: 10px;	/* Rounded corners */
 }
 

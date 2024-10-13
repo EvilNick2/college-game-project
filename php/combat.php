@@ -1,9 +1,19 @@
+<?php
+session_start();
+if (!isset($_SESSION['loggedin'])) {
+	header('Location: index.html');
+	exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../fonts/css/all.css">
+	<link rel="stylesheet" href="../css/profile.css" type="text/css">
 	<link rel="stylesheet" href="../css/style.css" type="text/css">
 	<script src="../js/src/jquery-1.11.0.min.js"></script>
 	<script src="../js/src/jquery-migrate-1.2.1.min.js"></script>
@@ -13,7 +23,16 @@
 	<title>Combat</title>
 </head>
 
-<body style="background-color: #292929">
+<body>
+	<nav class="navtop">
+		<div>
+			<h1>Combat</h1>
+			<a href="profile.php"><i class="fa-solid fa-user-circle"></i>
+				<?=htmlspecialchars($_SESSION['name'], ENT_QUOTES)?>
+			</a>
+			<a href="logout.php"><i class="fa-solid fa-sign-out-alt"></i>Logout</a>
+		</div>
+	</nav>
 	<img id="enemyImage" src="" alt="Enemy Image" />
 	<div class="textOutput">
 		<div id="playerHealth"></div>

@@ -149,7 +149,7 @@ $(document).ready(function () {
 				// Remove the player data from local storage for a fresh start
 				localStorage.removeItem("playerHealth");
 				localStorage.removeItem("playerAmmo");
-				window.location.href = "../index.html";
+				window.location.href = "mainMenu.html";
 			}, 2000);
 			return true;
 		} else if (enemyHealth <= 0) {
@@ -158,7 +158,7 @@ $(document).ready(function () {
 			localStorage.setItem("playerHealth", playerHealth);
 			localStorage.setItem("playerAmmo", player.ammo);
 			setTimeout(() => {
-				window.location.href = "explore.html";
+				window.location.href = "explore.php";
 			}, 2000);
 			return true;
 		}

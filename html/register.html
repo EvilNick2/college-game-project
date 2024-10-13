@@ -3,23 +3,15 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Login</title>
+	<title>Register</title>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-	<link href="css/profile.css" rel="stylesheet" type="text/css">
-	<script>
-		window.onload = function () {
-			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "php/create_db.php", true);
-			xhr.send();
-
-		};
-	</script>
+	<link href="../css/profile.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-	<div class="login">
-		<h1>Login</h1>
-		<form action="php/authenticate.php" method="post" autocomplete="off">
+	<div class="register">
+		<h1>Register</h1>
+		<form action="../php/register.php" method="post">
 			<label for="username">
 				<i class="fas fa-user"></i>
 			</label>
@@ -28,11 +20,11 @@
 				<i class="fas fa-lock"></i>
 			</label>
 			<input type="password" name="password" placeholder="Password" id="password" required>
-			<input type="submit" value="Login">
-		</form>
-		<form action="html/register.html" method="get">
+			<label for="email">
+				<i class="fas fa-envelope"></i>
+			</label>
+			<input type="text" name="email" placeholder="johndoe@email.com">
 			<input type="submit" value="Register">
-		</form>
 	</div>
 </body>
 

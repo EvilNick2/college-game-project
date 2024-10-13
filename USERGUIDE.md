@@ -13,7 +13,7 @@
    - This game is made for a college project. The game is set in western times and has combat elements as well as exploration and looting and takes insperation from games like the Red Dead Redemption series
 
 2. **How do I start combat?**
-   - To start combat, open [index.html](index.html) in your browser and clicking the play text on the poster once at the exploration page you will need to explore and will have a 30% chance to encounter an enemy. 
+  - To start combat, open XAMPP and start the Apache and MySQL servers, then go to localhost/college-game-project in your prefered browser and click the play text on the poster once at the exploration page you will need to explore and will have a 30% chance to encounter an enemy. 
 
 3. **What are the main features of the game?**
    - The combat system includes:

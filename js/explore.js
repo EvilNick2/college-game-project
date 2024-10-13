@@ -68,7 +68,7 @@ $(document).ready(function () {
 					// Add player data to local storage for persistance over pages
 					localStorage.setItem("playerHealth", player.health);
 					localStorage.setItem("playerAmmo", player.ammo);
-					window.location.href = `combat.html?enemy=${enemy}`
+					window.location.href = `combat.php?enemy=${enemy}`
 				}, 1000)
 			} else {
 				textPrint("You found nothing of interest.")

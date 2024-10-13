@@ -40,24 +40,31 @@ The following tools were used in this project:
 - [CSS](https://www.w3.org/Style/CSS/Overview.en.html)
 - [JavaScript](https://ecma-international.org/publications-and-standards/standards/ecma-262/)
 - [jQuery](https://jquery.com/)
+- [XAMPP](https://www.apachefriends.org/)
+- [PHP](https://www.php.net/)
+- [SQL](https://www.mysql.com/)
 
 ## :white_check_mark: Requirements ##
 
-Before starting, you need to have [Git](https://git-scm.com) installed.
+Before starting, you need to have [Git](https://git-scm.com) and [XAMPP](https://www.apachefriends.org/) installed.
 
 ## :checkered_flag: Starting ##
 
 ```bash
-# Clone this project
+# Clone this project into your XAMPP htdocs folder
 $ git clone https://github.com/EvilNick2/college-game-project
 
-# Access
-$ cd college-game-project
+# Open XAMPP and start the Apache and MySQL services
 
-# Run the project
-$ start index.html
+# Navigate to college-game-project/php and create a file called config.php and input your SQL credentials in the format shown below
+<?php
+define('DATABASE_HOST', 'localhost');
+define('DATABASE_USER', 'root');
+define('DATABASE_PASS', '');
+define('DATABASE_NAME', 'bitd_db'); # Rename the database to whatever you want
+?>
 
-# The Website will open in your default browser
+# Go to localhost/college-game-project
 ```
 
 ## :memo: License ##
