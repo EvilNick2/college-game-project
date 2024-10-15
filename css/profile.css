@@ -1,20 +1,24 @@
+/* Define CSS variables for theme colors */
 :root {
-	--background-color: #292929;
-	--foreground-color: #202020;
-	--main-color: #860dbe;
-	--accent-color: #000000;
-	--font-color: white;
+	--background-color: #292929; /* Dark background colour */
+	--foreground-color: #202020; /* Darker colour for foreground elements */
+	--main-color: #860dbe; /* Main accent colour */
+	--accent-color: #000000;	/* Accent colour */
+	--font-color: white;	/* Font colour */
 }
 
+/* Apply default styling to all elements */
 * {
-	box-sizing: border-box;
-	font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
-	font-size: 16px;
+	box-sizing: border-box; /* Apply box-sizing behaviour */
+	font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif; /* Font list used by all elements */
+	font-size: 16px; /* Base font size */
 }
 
+/* Set the background colour of the body */
 body {
 	background-color: var(--background-color) !important;
 }
+
 
 .login,
 .register {

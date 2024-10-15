@@ -8,6 +8,21 @@ $(document).ready(function () {
 
 	attachListeners();
 
+	// Function to read the player's data from the database
+	function fetchPlayerStats(callback) {
+		$.ajax({
+			url: '../php/fetchPlayerStats.php', // Adjust the path if necessary
+			method: 'GET',
+			dataType: 'json',
+			success: function (data) {
+				callback(data);
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.error('Error fetching player stats:', textStatus, errorThrown);
+			}
+		});
+	}
+
 	// Function to print text to the output box
 	function textPrint(input) {
 		$(".output")
@@ -65,9 +80,6 @@ $(document).ready(function () {
 				const enemy = getRandomEnemy(enemies);
 				textPrint("You encountered an enemy!");
 				setTimeout(() => {
-					// Add player data to local storage for persistance over pages
-					localStorage.setItem("playerHealth", player.health);
-					localStorage.setItem("playerAmmo", player.ammo);
 					window.location.href = `combat.php?enemy=${enemy}`
 				}, 1000)
 			} else {
@@ -76,25 +88,17 @@ $(document).ready(function () {
 		}, 1000);
 	}
 
-	// Retrieve player stats from local storage or set default values
-	const playerHealth = localStorage.getItem("playerHealth");
-	const playerAmmo = localStorage.getItem("playerAmmo");
+	// Function call to get the players stats from the database
+	fetchPlayerStats(function (data) {
+		const player = {
+			health: data.stats.health,
+			initialHealth: 100, // Maximum health of the player
+			ammo: data.stats.ammo,
+			initialAmmo: 5 // Maximum ammo of the player
+		};
 
-	const player = {
-		health: playerHealth !== null ? parseInt(playerHealth, 10) : 100,
-		initialHealth: 100, // Maximum health of the player
-		ammo: playerAmmo !== null ? parseInt(playerAmmo, 10) : 5,
-		initialAmmo: 5 // Maximum ammo of the player
-	}
-
-	// If the player stats are found in local storage, update the player object
-	if (playerHealth !== null && playerAmmo !== null) {
-		player.health = parseInt(playerHealth, 10);
-		player.ammo = parseInt(playerAmmo, 10);
-		localStorage.removeItem("playerHealth");
-		localStorage.removeItem("playerAmmo");
-	}
-	// Update the health and ammo bars to correctly display the players stats
-	calcHealthBar("playerHealth", player.health, player.initialHealth);
-	calcAmmoBar("playerAmmo", player.ammo, player.initialAmmo)
-})
+		// Update the health and ammo bars to correctly display the player's stats
+		calcHealthBar("playerHealth", player.health, player.initialHealth);
+		calcAmmoBar("playerAmmo", player.ammo, player.initialAmmo);
+	});
+});

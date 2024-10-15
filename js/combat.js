@@ -40,21 +40,16 @@ $(document).ready(function () {
 		initialHealth: 100,
 		ammo: 5,
 		initialAmmo: 5,
-		inventory: [
-			"dagger",
-			"sword",
-			["bandage", 2],
-			["ammoLoader", 2]
-		],
+		inventory: [],
 		travelHistory: []
-	}
+	};
 
 	// Weapon: Small Dagger
 	var dagger = {
 		name: "Small Dagger",
 		stats: 10,
 		damageType: "slash"
-	}
+	};
 
 	// Weapon: Revolver
 	var pistol = {
@@ -63,14 +58,14 @@ $(document).ready(function () {
 		damageType: "piercing",
 		ammoCost: 1,
 		owned: false
-	}
+	};
 
 	// Item: Ammo Loader
 	var ammoLoader = {
 		name: "Ammo Loader",
 		stats: 5,
 		owned: 2
-	}
+	};
 
 	// Item: Bandage
 	var bandage = {
@@ -93,7 +88,7 @@ $(document).ready(function () {
 			["slash", 8]
 		],
 		vulnerability: ["piercing", 5]
-	}
+	};
 
 	// Enemy: Sheriff
 	var sheriff = {
@@ -112,7 +107,7 @@ $(document).ready(function () {
 			["whip", 6]
 		],
 		vulnerability: ["slash", 4]
-	}
+	};
 
 	// Player's equipped weapon and damage variables
 	let playerEquipped = dagger;
@@ -121,6 +116,40 @@ $(document).ready(function () {
 	let enemyMove;
 	let enemyDamage;
 	let hasAttacked = true;	// Flag to check if the player has attacked
+
+	// Function to read the player's data from the database
+	function fetchPlayerStats(callback) {
+		$.ajax({
+			url: '../php/fetchPlayerStats.php',
+			method: 'GET',
+			dataType: 'json',
+			success: function (data) {
+				callback(data);
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.error('Error fetching player stats:', textStatus, errorThrown);
+			}
+		});
+	}
+
+	// Function to save the player's data to the database
+	function savePlayerStats() {
+		$.ajax({
+			url: '../php/savePlayerStats.php',
+			method: 'POST',
+			data: {
+				health: player.health,
+				ammo: player.ammo,
+				inventory: player.inventory
+			},
+			success: function (response) {
+				console.log('Player stats saved successfully:', response);
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.error('Error saving player stats:', textStatus, errorThrown);
+			}
+		});
+	}
 
 	// Function to check the passed enemy data from the explore URL redirect
 	function getQueryParams() {
@@ -145,18 +174,14 @@ $(document).ready(function () {
 	function gameOverCheck(playerHealth, enemyHealth) {
 		if (playerHealth <= 0) {
 			textPrint("You lose. Taking you back to the main menu...");
+			savePlayerStats();
 			setTimeout(() => {
-				// Remove the player data from local storage for a fresh start
-				localStorage.removeItem("playerHealth");
-				localStorage.removeItem("playerAmmo");
 				window.location.href = "mainMenu.html";
 			}, 2000);
 			return true;
 		} else if (enemyHealth <= 0) {
 			textPrint("You've defeated the " + enemy.name + ". Taking you back to exploration...");
-			// Add player data to local storage for persistance over pages
-			localStorage.setItem("playerHealth", playerHealth);
-			localStorage.setItem("playerAmmo", player.ammo);
+			savePlayerStats();
 			setTimeout(() => {
 				window.location.href = "explore.php";
 			}, 2000);
@@ -204,6 +229,26 @@ $(document).ready(function () {
 		if (damageTypeAttacking.damageType === enemyDamageType.vulnerability[0]) {
 			return enemyDamageType.vulnerability[1];
 		}
+	}
+
+	// Function to update the players inventory when an item is used
+	function updateInventory(itemName, quantity) {
+		for (let i = 0; i < player.inventory.length; i++) {
+			if (player.inventory[i][0] === itemName) {
+				player.inventory[i][1] = quantity;
+				break;
+			}
+		}
+	}
+
+	// Function to get the quantity of an item from the player's inventory
+	function getInventoryItemQuantity(itemName) {
+		for (let i = 0; i < player.inventory.length; i++) {
+			if (player.inventory[i][0] === itemName) {
+				return player.inventory[i][1];
+			}
+		}
+		return 0; // Return 0 if the item is not found in the inventory
 	}
 
 	// Function to handle the enemies turn
@@ -301,6 +346,7 @@ $(document).ready(function () {
 		if (ammoLoader.owned > 0) {
 			player.ammo = player.ammo + ammoLoader.stats;
 			ammoLoader.owned = ammoLoader.owned - 1;
+			updateInventory("ammoLoader", ammoLoader.owned)
 			textPrint("You reloaded your Revolver.");
 			calcAmmoBar("playerAmmo", player.ammo, player.initialAmmo);
 			reload.play();
@@ -319,6 +365,7 @@ $(document).ready(function () {
 		if (bandage.owned > 0) {
 			player.health = player.health + bandage.stats;
 			bandage.owned = bandage.owned - 1;
+			updateInventory("bandage", bandage.owned)
 			textPrint("You used a bandage. Your wounds stop bleeding");
 			calcHealthBar("playerHealth", player.health, player.initialHealth);
 			useHealing.play();
@@ -334,10 +381,6 @@ $(document).ready(function () {
 		document.querySelector(".output").innerHTML = "";
 		enemy = enemyFighting;
 		textPrint(enemy.greeting);
-
-		// Update the player's stats from local storage or set default values
-		player.health = localStorage.getItem("playerHealth") || 100;
-		player.ammo = localStorage.getItem("playerAmmo") || 5;
 
 		calcHealthBar("playerHealth", player.health, player.initialHealth);
 		calcAmmoBar("playerAmmo", player.ammo, player.initialAmmo);
@@ -359,17 +402,33 @@ $(document).ready(function () {
 		calcHealthBar("enemyHealth", enemy.health, enemy.initialHealth);
 	}
 
-	// Get the encountered enemy from the URL and start the combat
-	const params = getQueryParams();
-	if (params.enemy) {
-		let enemy;
-		if (params.enemy === "bandit") {
-			enemy = bandit;
-		} else if (params.enemy === "sheriff") {
-			enemy = sheriff;
+	// Function call to get the players stats from the database
+	fetchPlayerStats((data) => {
+		// Update the players stats with the values gotten form the database
+		player.health = data.stats.health;
+		player.ammo = data.stats.ammo;
+		player.inventory = data.inventory.map(item => [item.item_name, item.quantity]);
+
+		// Update the bar displays with the newly set values from the database
+		calcHealthBar("playerHealth", player.health, player.initialHealth);
+		calcAmmoBar("playerAmmo", player.ammo, player.initialAmmo);
+
+		// Update the items owned with the item counts updated from the database
+		ammoLoader.owned = getInventoryItemQuantity("ammoLoader");
+		bandage.owned = getInventoryItemQuantity("bandage");
+
+		// Get the encountered enemy from the URL and start the combat
+		const params = getQueryParams();
+		if (params.enemy) {
+			let enemy;
+			if (params.enemy === "bandit") {
+				enemy = bandit;
+			} else if (params.enemy === "sheriff") {
+				enemy = sheriff;
+			}
+			if (enemy) {
+				combat(enemy);
+			}
 		}
-		if (enemy) {
-			combat(enemy);
-		}
-	}
+	});
 });

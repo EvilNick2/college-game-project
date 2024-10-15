@@ -1,9 +1,10 @@
 /* Define CSS variables for colour values */
 :root {
 	--background-color: #292929;	/* Dark background colour */
-	--foreground-color: white;	/* White foreground colour */
-	--default-button: grey;	/* Default button colour */
-	--health-color: red;	/* Colour for health bar */
+	--foreground-color: #FFFFFF;	/* White foreground colour */
+	--default-button: #808080;	/* Default button colour */
+	--font-color: #FFFFFF; /* Default font color */
+	--health-color: #FF0000;	/* Colour for health bar */
 	--ammo-color: #248092;	/* Colour for ammo bar */
 }
 
@@ -50,6 +51,7 @@ pre {
 	margin-top: 25px;	/* Add top margin */
 	overflow: auto;	/* Enable scrolling if content overflows */
 	border-radius: 10px;	/* Rounded corners */
+	padding: 10px; /* Add padding to the text output  */
 }
 
 /* Style for combat buttons */
