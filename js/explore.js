@@ -8,10 +8,20 @@ $(document).ready(function () {
 
 	attachListeners();
 
+	// Player's initial stats and inventory
+	var player = {
+		health: 100,
+		initialHealth: 100,
+		ammo: 5,
+		initialAmmo: 5,
+		inventory: [],
+		travelHistory: []
+	};
+
 	// Function to read the player's data from the database
 	function fetchPlayerStats(callback) {
 		$.ajax({
-			url: '../php/fetchPlayerStats.php', // Adjust the path if necessary
+			url: '../php/fetchPlayerStats.php',
 			method: 'GET',
 			dataType: 'json',
 			success: function (data) {
@@ -19,6 +29,25 @@ $(document).ready(function () {
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.error('Error fetching player stats:', textStatus, errorThrown);
+			}
+		});
+	}
+
+	// Function to save the player's data to the database
+	function savePlayerStats() {
+		$.ajax({
+			url: '../php/savePlayerStats.php',
+			method: 'POST',
+			data: {
+				health: player.health,
+				ammo: player.ammo,
+				inventory: player.inventory
+			},
+			success: function (response) {
+				console.log('Player stats saved successfully:', response);
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.error('Error saving player stats:', textStatus, errorThrown);
 			}
 		});
 	}
@@ -54,6 +83,26 @@ $(document).ready(function () {
 		ammoBar.title = `${ammo}/${initialAmmo}`;
 	}
 
+	// Function to update the players inventory when an item is used
+	function updateInventory(itemName, quantity) {
+		for (let i = 0; i < player.inventory.length; i++) {
+			if (player.inventory[i][0] === itemName) {
+				player.inventory[i][1] = quantity;
+				break;
+			}
+		}
+	}
+
+	// Function to get the quantity of an item from the player's inventory
+	function getInventoryItemQuantity(itemName) {
+		for (let i = 0; i < player.inventory.length; i++) {
+			if (player.inventory[i][0] === itemName) {
+				return player.inventory[i][1];
+			}
+		}
+		return 0; // Return 0 if the item is not found in the inventory
+	}
+
 	// List of possible enemies for the combat redirect
 	const enemies = [
 		{ name: "bandit", weight: 70 }, // Bandit with a higher chance of encounter
@@ -75,27 +124,49 @@ $(document).ready(function () {
 	// Explore function triggered by the explore button
 	function explore() {
 		textPrint("You start exploring the area...");
+		document.getElementById("explore").disabled = true; // Disable the button
+
+		// Delay exploration result by 1 second
 		setTimeout(() => {
-			if (Math.random() < 0.3) {
-				const enemy = getRandomEnemy(enemies);
+			const randomValue = Math.random(); // Generate a random value between 0 and 1
+
+			// 30% chance to encounter an enemy
+			if (randomValue < 0.3) {
+				const enemy = getRandomEnemy(enemies); // Get a random enemy based on weights
 				textPrint("You encountered an enemy!");
+				savePlayerStats(); // Save the players stats
+				// Redirect to the combat page after 2 seconds
 				setTimeout(() => {
-					window.location.href = `combat.php?enemy=${enemy}`
-				}, 1000)
+					window.location.href = `combat.php?enemy=${enemy}`;
+				}, 2000);
+
+			// 20% chance to find a bandage 
+			} else if (randomValue < 0.5) {
+				textPrint("You found a bandage!");
+				// Update the inventory to add one bandage
+				updateInventory("bandage", getInventoryItemQuantity("bandage") + 1);
+
+			// 10% chance to find an ammo loader
+			} else if (randomValue < 0.6) {
+				textPrint("You found an ammo loader!");
+				// Update the inventory to add one ammo loader
+				updateInventory("ammoLoader", getInventoryItemQuantity("ammoLoader") + 1);
+
+			// 40% chance to find nothing
 			} else {
-				textPrint("You found nothing of interest.")
+				textPrint("You found nothing of interest.");
 			}
+
+			document.getElementById("explore").disabled = false; // Re-enable the button
 		}, 1000);
 	}
 
 	// Function call to get the players stats from the database
 	fetchPlayerStats(function (data) {
-		const player = {
-			health: data.stats.health,
-			initialHealth: 100, // Maximum health of the player
-			ammo: data.stats.ammo,
-			initialAmmo: 5 // Maximum ammo of the player
-		};
+		// Update the players stats with the values gotten from the database
+		player.health = data.stats.health;
+		player.ammo = data.stats.ammo;
+		player.inventory = data.inventory.map(item => [item.item_name, item.quantity]);
 
 		// Update the health and ammo bars to correctly display the player's stats
 		calcHealthBar("playerHealth", player.health, player.initialHealth);
