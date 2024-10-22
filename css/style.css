@@ -52,6 +52,7 @@ pre {
 	overflow: auto;	/* Enable scrolling if content overflows */
 	border-radius: 10px;	/* Rounded corners */
 	padding: 10px; /* Add padding to the text output  */
+	word-wrap: break-word;
 }
 
 /* Style for combat buttons */
