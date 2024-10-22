@@ -7,6 +7,19 @@
 	<a href="https://github.com/EvilNick2" target="_blank">Author</a>
 </p>
 
+## :question: Starting ##
+
+- Create a file within the "php" folder named "config.php"
+then copy and paste the code below into the file in order for the game to start correctly. 
+
+```php
+<?php
+define('DATABASE_HOST', 'localhost');
+define('DATABASE_USER', 'root');
+define('DATABASE_PASS', '');
+define('DATABASE_NAME', 'bitd_db'); # Rename the database to whatever you want
+?>
+```
 ## :question: User Guide and FAQ ##
 
 1. **What is the purpose of this project?**
