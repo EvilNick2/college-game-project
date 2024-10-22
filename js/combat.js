@@ -367,8 +367,11 @@ $(document).ready(function () {
 			bandage.owned = bandage.owned - 1;
 			updateInventory("bandage", bandage.owned)
 			textPrint("You used a bandage. Your wounds stop bleeding");
-			calcHealthBar("playerHealth", player.health, player.initialHealth);
 			useHealing.play();
+			if (player.health > 100) {
+				player.health = 100
+			}
+			calcHealthBar("playerHealth", player.health, player.initialHealth);
 			setTimeout(enemyTurn, 1000);
 			hasAttacked = false;
 		} else {
@@ -380,6 +383,7 @@ $(document).ready(function () {
 	function combat(enemyFighting) {
 		document.querySelector(".output").innerHTML = "";
 		enemy = enemyFighting;
+		textPrint("Welcome to combat! The red bar on the left is the health of your character. The blue bar is your current ammo loaded. The red bar on the right of the screen is your enemies health. ")
 		textPrint(enemy.greeting);
 
 		calcHealthBar("playerHealth", player.health, player.initialHealth);
@@ -416,6 +420,8 @@ $(document).ready(function () {
 		// Update the items owned with the item counts updated from the database
 		ammoLoader.owned = getInventoryItemQuantity("ammoLoader");
 		bandage.owned = getInventoryItemQuantity("bandage");
+
+        
 
 		// Get the encountered enemy from the URL and start the combat
 		const params = getQueryParams();

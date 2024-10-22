@@ -173,6 +173,6 @@ $(document).ready(function () {
 		calcAmmoBar("playerAmmo", player.ammo, player.initialAmmo);
 
 		textPrint("Welcome to Blood in Dust, You are a rugged outlaw on the western frontier, by the name of Clint. As you explore the west you will encounter lots of foes who are out to attack and rob you. Press the explore journey to start your journey across 1880's America!." )
-		textPrint("Be careful out there cowboy...")
+		textPrint("Be careful out there cowpoke...")
 	});
 });
