@@ -13,6 +13,24 @@ body {
 	background-color: var(--background-color) !important;
 }
 
+.backgroundImage, .enemyImage {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.backgroundImage img {
+	max-width: 100%;
+	height: auto;
+}
+
+#enemyImage {
+	display: inline;	/* Display as block */
+	margin-left: auto;	/* Adds left margin to center image */
+	margin-right: auto;	/* Adds right margin to center image */
+	margin-top: 10px;	/* Adds top margin for better visuals */
+}
+
 /* Style for the console element */
 #console {
 	display: none;	/* Hide the console be default */
@@ -52,7 +70,6 @@ pre {
 	overflow: auto;	/* Enable scrolling if content overflows */
 	border-radius: 10px;	/* Rounded corners */
 	padding: 10px; /* Add padding to the text output  */
-	word-wrap: break-word;
 }
 
 /* Style for combat buttons */
@@ -163,12 +180,4 @@ pre {
 /* Specific style for the explore button */
 #explore {
 	margin-left: 5px;	/* Add left margin */
-}
-
-/* Style for enemy image used in combat */
-#enemyImage {
-	display: block;	/* Display as block */
-	margin-left: auto;	/* Adds left margin to center image */
-	margin-right: auto;	/* Adds right margin to center image */
-	margin-top: 10px;	/* Adds top margin for better visuals */
 }

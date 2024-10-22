@@ -38,8 +38,15 @@ if (!isset($_SESSION['loggedin'])) {
 			<a href="logout.php"><i class="fa-solid fa-sign-out-alt"></i>Logout</a>
 		</div>
 	</nav>
-	<!-- Empty image to be set depending on enemy fighting -->
-	<img id="enemyImage" src="" alt="Enemy Image" />
+	<div class="images">
+		<div class="backgroundImage">
+			<img src="../imgs/desertRoad.png" alt="">
+		</div>
+		<!-- Empty image to be set depending on enemy fighting -->
+		 <div class="enemyImage">
+			 <img id="enemyImage" src="" alt="Enemy Image" />
+		</div>
+	</div>
 	<!-- Container for displaying text output, player and enemy stats -->
 	<div class="textOutput">
 		<div id="playerHealth"></div>
