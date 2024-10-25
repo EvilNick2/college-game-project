@@ -13,22 +13,31 @@ body {
 	background-color: var(--background-color) !important;
 }
 
-.backgroundImage, .enemyImage {
+/* Style for the images */
+.images {
+	position: relative; /* Set the position the container to relative */
+	/* Set the display to flex and center the items*/
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	height: 256px; /* Set the height of the container for proper displaying */
 }
 
+/* Style for both images */
+.backgroundImage, .enemyImage {
+	position: absolute; /* Position the child images absolutely relative to the parent div */
+}
+
+/* Style for the image of backgroundImage */
 .backgroundImage img {
 	max-width: 100%;
 	height: auto;
 }
 
+/* Style for the enemyImage */
 #enemyImage {
-	display: inline;	/* Display as block */
-	margin-left: auto;	/* Adds left margin to center image */
-	margin-right: auto;	/* Adds right margin to center image */
-	margin-top: 10px;	/* Adds top margin for better visuals */
+	max-width: 100%;
+	height: auto;
 }
 
 /* Style for the console element */

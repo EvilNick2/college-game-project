@@ -59,7 +59,7 @@ $stmt->bind_param("i", $user_id); // Bind the user_id parameter
 $stmt->execute(); // Execute the statement
 $result = $stmt->get_result(); // Get the result of the query
 
-$inventory = []; // INitialize the inventory array
+$inventory = []; // Initialize the inventory array
 
 if ($result->num_rows > 0) {
     // If there are result, fetch the data
@@ -69,6 +69,27 @@ if ($result->num_rows > 0) {
 }
 
 $response['inventory'] = $inventory; // Add the inventory to the response
+
+$stmt->close(); // Close the statement
+
+// SQL query to fetch the players name based on user_id
+$sql = "
+    SELECT username
+    FROM users
+    WHERE id = ?
+";
+
+// Prepare and execute the statement
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id); // Bind the user_id parameter
+$stmt->execute(); // Execute the statement
+$result = $stmt->get_result(); // Get the results of the query
+
+if ($result->num_rows > 0) {
+    // If there is a result, fetch the data
+    $row = $result->fetch_assoc();
+    $response['name'] = $row; // Add the name to the array
+};
 
 $stmt->close(); // Close the statement
 $conn->close(); // Close the database connection

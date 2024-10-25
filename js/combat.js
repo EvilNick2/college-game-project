@@ -40,6 +40,7 @@ $(document).ready(function () {
 		initialHealth: 100,
 		ammo: 5,
 		initialAmmo: 5,
+		name: "",
 		inventory: [],
 		travelHistory: []
 	};
@@ -383,7 +384,7 @@ $(document).ready(function () {
 	function combat(enemyFighting) {
 		document.querySelector(".output").innerHTML = "";
 		enemy = enemyFighting;
-		textPrint("Welcome to combat! The red bar on the left is the health of your character. The blue bar is your current ammo loaded. The red bar on the right of the screen is your enemies health. ")
+		textPrint("Welcome to combat, " + player.name + "! The red bar on the left is the health of your character. The blue bar is your current ammo loaded. The red bar on the right of the screen is your enemies health. ")
 		textPrint(enemy.greeting);
 
 		calcHealthBar("playerHealth", player.health, player.initialHealth);
@@ -411,6 +412,7 @@ $(document).ready(function () {
 		// Update the players stats with the values gotten form the database
 		player.health = data.stats.health;
 		player.ammo = data.stats.ammo;
+		player.name = data.name.username;
 		player.inventory = data.inventory.map(item => [item.item_name, item.quantity]);
 
 		// Update the bar displays with the newly set values from the database
@@ -420,8 +422,6 @@ $(document).ready(function () {
 		// Update the items owned with the item counts updated from the database
 		ammoLoader.owned = getInventoryItemQuantity("ammoLoader");
 		bandage.owned = getInventoryItemQuantity("bandage");
-
-        
 
 		// Get the encountered enemy from the URL and start the combat
 		const params = getQueryParams();
